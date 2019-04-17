@@ -5,7 +5,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -26,12 +28,12 @@ public class TreeContainerUT {
         one.setChildren(Arrays.asList(two, three));
         two.setChildren(Arrays.asList(four, five));
         three.setChildren(Arrays.asList(six));
-        four.setChildren(null);
+        four.setChildren(new ArrayList<>());
         five.setChildren(Arrays.asList(seven, eight));
         six.setChildren(Arrays.asList(nine));
-        seven.setChildren(null);
-        eight.setChildren(null);
-        nine.setChildren(null);
+        seven.setChildren(new ArrayList<>());
+        eight.setChildren(new ArrayList<>());
+        nine.setChildren(new ArrayList<>());
     }
 
     @Test
