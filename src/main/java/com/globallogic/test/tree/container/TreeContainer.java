@@ -81,7 +81,7 @@ public class TreeContainer<T> implements TreeExplorer<T>, TreeEditor<T> {
         }
         List<TreeNode<T>> childrenToDelete = parent.getChildren();
 
-        parent.setChildren(null);
+        parent.setChildren(new ArrayList<>());
 
         childrenRemovedListeners.forEach(childrenRemovedListener ->
                 childrenRemovedListener.childrenRemoved(parent, childrenToDelete));
