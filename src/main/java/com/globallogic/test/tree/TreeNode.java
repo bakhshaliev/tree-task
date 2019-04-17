@@ -2,6 +2,7 @@ package com.globallogic.test.tree;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -12,5 +13,5 @@ public class TreeNode<T> {
     }
 
     private T value;
-    private List<TreeNode<T>> children;
+    private List<TreeNode<T>> children = new ArrayList<>();
 }
