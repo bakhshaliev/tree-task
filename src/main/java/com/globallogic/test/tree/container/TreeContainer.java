@@ -70,7 +70,8 @@ public class TreeContainer<T> implements TreeExplorer<T>, TreeEditor<T> {
 
         parent.getChildren().addAll(childrenToAdd);
 
-        childrenAddedListeners.forEach(childrenAddedListener -> childrenAddedListener.childrenAdded(parent));
+        childrenAddedListeners.forEach(childrenAddedListener ->
+                childrenAddedListener.childrenAdded(parent, childrenToAdd));
     }
 
     @Override
@@ -78,10 +79,12 @@ public class TreeContainer<T> implements TreeExplorer<T>, TreeEditor<T> {
         if (parent == null) {
             return;
         }
+        List<TreeNode<T>> childrenToDelete = parent.getChildren();
 
         parent.setChildren(null);
 
-        childrenRemovedListeners.forEach(childrenRemovedListener -> childrenRemovedListener.childrenRemoved(parent));
+        childrenRemovedListeners.forEach(childrenRemovedListener ->
+                childrenRemovedListener.childrenRemoved(parent, childrenToDelete));
     }
 
     public void addChildrenAddedListener(ChildrenAddedListener<T> childrenAddedListener) {
