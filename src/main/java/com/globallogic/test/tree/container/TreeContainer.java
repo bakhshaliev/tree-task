@@ -37,11 +37,8 @@ public class TreeContainer<T> implements TreeExplorer<T>, TreeEditor<T> {
             nodes.add(node);
         }
 
-        List<TreeNode<T>> children = node.getChildren();
-        if (children != null) {
-            for (TreeNode<T> child : children) {
-                search(predicate, child, nodes);
-            }
+        for (TreeNode<T> child : node.getChildren()) {
+            search(predicate, child, nodes);
         }
 
         return nodes;
@@ -58,11 +55,8 @@ public class TreeContainer<T> implements TreeExplorer<T>, TreeEditor<T> {
         }
         subTrees.add(parent);
 
-        List<TreeNode<T>> children = parent.getChildren();
-        if (children != null) {
-            for (TreeNode<T> child : children) {
-                getSubTrees(child, subTrees);
-            }
+        for (TreeNode<T> child : parent.getChildren()) {
+            getSubTrees(child, subTrees);
         }
 
         return subTrees;
@@ -70,16 +64,11 @@ public class TreeContainer<T> implements TreeExplorer<T>, TreeEditor<T> {
 
     @Override
     public void addChildren(TreeNode<T> parent, List<TreeNode<T>> childrenToAdd) {
-        if (childrenToAdd == null) {
+        if (childrenToAdd == null || childrenToAdd.isEmpty()) {
             return;
         }
 
-        List<TreeNode<T>> children = parent.getChildren();
-        if (children == null) {
-            children = new ArrayList<>();
-            parent.setChildren(children);
-        }
-        children.addAll(childrenToAdd);
+        parent.getChildren().addAll(childrenToAdd);
 
         childrenAddedListeners.forEach(childrenAddedListener -> childrenAddedListener.childrenAdded(parent));
     }

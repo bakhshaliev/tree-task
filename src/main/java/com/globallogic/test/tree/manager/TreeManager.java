@@ -14,14 +14,10 @@ public class TreeManager<T> {
         int maxChildrenCount = Integer.MIN_VALUE;
 
         for (TreeNode<T> subTree : treeContainer.getSubTrees(parent)) {
-            List<TreeNode<T>> children = subTree.getChildren();
+            int childrenCount = subTree.getChildren().size();
 
-            if (children != null) {
-                int childrenCount = children.size();
-
-                if (childrenCount > maxChildrenCount) {
-                    maxChildrenCount = childrenCount;
-                }
+            if (childrenCount > maxChildrenCount) {
+                maxChildrenCount = childrenCount;
             }
         }
 
