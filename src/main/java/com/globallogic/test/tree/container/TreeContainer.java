@@ -25,14 +25,12 @@ public class TreeContainer<T> implements TreeExplorer<T>, TreeEditor<T> {
 
     @Override
     public List<TreeNode<T>> search(Predicate<T> predicate) {
-        List<TreeNode<T>> nodes = new ArrayList<>();
-        search(predicate, root, nodes);
-        return nodes;
+        return search(predicate, root, new ArrayList<>());
     }
 
-    private void search(Predicate<T> predicate, TreeNode<T> node, List<TreeNode<T>> nodes) {
+    private List<TreeNode<T>> search(Predicate<T> predicate, TreeNode<T> node, List<TreeNode<T>> nodes) {
         if (node == null) {
-            return;
+            return null;
         }
 
         if (predicate.test(node.getValue())) {
@@ -40,12 +38,13 @@ public class TreeContainer<T> implements TreeExplorer<T>, TreeEditor<T> {
         }
 
         List<TreeNode<T>> children = node.getChildren();
-        if (children == null) {
-            return;
+        if (children != null) {
+            for (TreeNode<T> child : children) {
+                search(predicate, child, nodes);
+            }
         }
-        for (TreeNode<T> child : children) {
-            search(predicate, child, nodes);
-        }
+
+        return nodes;
     }
 
     @Override
