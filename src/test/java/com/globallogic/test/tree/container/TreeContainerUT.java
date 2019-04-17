@@ -38,12 +38,12 @@ public class TreeContainerUT {
     public void testSearch() {
         Predicate<Integer> isEven = integer -> integer % 2 == 0;
         Predicate<Integer> isOdd = integer -> integer % 2 != 0;
-        Predicate<Integer> isGreaterThenFive = integer -> integer > 5;
+        Predicate<Integer> isGreaterThanFive = integer -> integer > 5;
 
         Assert.assertEquals(Arrays.asList(two, four, eight, six), treeContainer.search(isEven));
         Assert.assertEquals(Arrays.asList(one, five, seven, three, nine), treeContainer.search(isOdd));
-        Assert.assertEquals(Arrays.asList(eight, six), treeContainer.search(isEven.and(isGreaterThenFive)));
-        Assert.assertEquals(Arrays.asList(seven, nine), treeContainer.search(isOdd.and(isGreaterThenFive)));
+        Assert.assertEquals(Arrays.asList(eight, six), treeContainer.search(isEven.and(isGreaterThanFive)));
+        Assert.assertEquals(Arrays.asList(seven, nine), treeContainer.search(isOdd.and(isGreaterThanFive)));
     }
 
     @Test
