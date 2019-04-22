@@ -5,15 +5,15 @@ import com.globallogic.test.tree.event.ChildrenAddedListener;
 import com.globallogic.test.tree.event.ChildrenRemovedListener;
 import com.globallogic.test.tree.operator.TreeEditor;
 import com.globallogic.test.tree.operator.TreeExplorer;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
-@Getter
-@Setter
+@Data
 public class TreeContainer<T> implements TreeExplorer<T>, TreeEditor<T> {
     private TreeNode<T> root;
     private List<ChildrenAddedListener<T>> childrenAddedListeners = new ArrayList<>();
@@ -45,21 +45,28 @@ public class TreeContainer<T> implements TreeExplorer<T>, TreeEditor<T> {
     }
 
     @Override
-    public List<TreeNode<T>> getSubTrees(TreeNode<T> parent) {
-        return getSubTrees(parent, new ArrayList<>());
+    public List<TreeNode<T>> getSubTreeNodes(TreeNode<T> parent) {
+        return getSubTreeNodes(parent, new ArrayList<>());
     }
 
-    private List<TreeNode<T>> getSubTrees(TreeNode<T> parent, List<TreeNode<T>> subTrees) {
+    private List<TreeNode<T>> getSubTreeNodes(TreeNode<T> parent, List<TreeNode<T>> subTrees) {
         if (parent == null) {
             return null;
         }
         subTrees.add(parent);
 
         for (TreeNode<T> child : parent.getChildren()) {
-            getSubTrees(child, subTrees);
+            getSubTreeNodes(child, subTrees);
         }
 
         return subTrees;
+    }
+
+    @Override
+    public List<TreeContainer<T>> getSubTrees(TreeNode<T> parent) {
+        return getSubTreeNodes(parent).stream()
+                .map((Function<TreeNode<T>, TreeContainer<T>>) TreeContainer::new)
+                .collect(Collectors.toList());
     }
 
     @Override

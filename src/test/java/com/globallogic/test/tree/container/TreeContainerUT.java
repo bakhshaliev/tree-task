@@ -49,12 +49,28 @@ public class TreeContainerUT {
     }
 
     @Test
-    public void testGetSubTrees() {
+    public void testGetSubTreeNodes() {
         Assert.assertEquals(Arrays.asList(one, two, four, five, seven, eight, three, six, nine),
-                treeContainer.getSubTrees(one));
+                treeContainer.getSubTreeNodes(one));
         Assert.assertEquals(Arrays.asList(two, four, five, seven, eight),
-                treeContainer.getSubTrees(two));
+                treeContainer.getSubTreeNodes(two));
         Assert.assertEquals(Arrays.asList(three, six, nine),
+                treeContainer.getSubTreeNodes(three));
+    }
+
+    @Test
+    public void testGetSubTrees() {
+        Assert.assertEquals(Arrays.asList(
+                new TreeContainer<>(one), new TreeContainer<>(two), new TreeContainer<>(four),
+                new TreeContainer<>(five), new TreeContainer<>(seven), new TreeContainer<>(eight),
+                new TreeContainer<>(three), new TreeContainer<>(six), new TreeContainer<>(nine)),
+                treeContainer.getSubTrees(one));
+        Assert.assertEquals(Arrays.asList(
+                new TreeContainer<>(two), new TreeContainer<>(four), new TreeContainer<>(five),
+                new TreeContainer<>(seven), new TreeContainer<>(eight)),
+                treeContainer.getSubTrees(two));
+        Assert.assertEquals(Arrays.asList(new TreeContainer<>(three), new TreeContainer<>(six),
+                new TreeContainer<>(nine)),
                 treeContainer.getSubTrees(three));
     }
 
@@ -73,12 +89,12 @@ public class TreeContainerUT {
     @Test
     public void testRemoveChildren() {
         treeContainer.removeChildren(three);
-        Assert.assertNull(three.getChildren());
+        Assert.assertEquals(Collections.emptyList(), three.getChildren());
 
         treeContainer.removeChildren(two);
-        Assert.assertNull(two.getChildren());
+        Assert.assertEquals(Collections.emptyList(), two.getChildren());
 
         treeContainer.removeChildren(one);
-        Assert.assertNull(one.getChildren());
+        Assert.assertEquals(Collections.emptyList(), one.getChildren());
     }
 }
